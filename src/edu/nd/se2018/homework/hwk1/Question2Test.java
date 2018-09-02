@@ -2,6 +2,12 @@ package edu.nd.se2018.homework.hwk1;
 import org.junit.Test;
 
 public class Question2Test {
+	/*
+	 * Homework1 Question2:
+	 * Test case provided.
+	 * 
+	 * @author Ian Cornelius
+	 */
 
 	@Test
 	public void test() {
