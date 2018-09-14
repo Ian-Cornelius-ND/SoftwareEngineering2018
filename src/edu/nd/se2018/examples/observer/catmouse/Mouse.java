@@ -27,7 +27,7 @@ public class Mouse extends Observable {
 	public Mouse(){
 		targetPosition = new Point(0,0);
 		rand = new Random();
-		mouseImage = new Image("images\\Mouse.png",50,50,true,true);	
+		mouseImage = new Image("images/Mouse.png",50,50,true,true);	
 		mouseImageView = new ImageView(mouseImage);		
 	}
 	

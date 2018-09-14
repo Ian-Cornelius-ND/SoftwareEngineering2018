@@ -19,8 +19,6 @@ class MainTest {
 		
 		Race race = new Race(5);
 		race.enrollHorse("", 0, 20, new EarlySprintStrategy());
-		race.enrollHorse("", 0, 20, new SlowStartStrategy());
-		race.enrollHorse("", 0, 20, new SteadyRunStrategy());
 		assert (race.race()).equals(" wins!");
 	}
 

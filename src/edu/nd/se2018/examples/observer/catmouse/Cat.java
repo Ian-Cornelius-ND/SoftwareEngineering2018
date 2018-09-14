@@ -24,7 +24,7 @@ public class Cat implements Observer{
 	// Constructor
 	public Cat(){
 		catPosition = new Point(rand.nextInt(800), rand.nextInt(800));
-		catImage = new Image("images\\Cat.png",50,50,true,true);	
+		catImage = new Image("images/Cat.png",50,50,true,true);	
 		catImageView = new ImageView(catImage);		
 	}
 	
