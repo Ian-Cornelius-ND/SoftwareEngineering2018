@@ -1,23 +1,17 @@
 package edu.nd.se2018.homework.hwk4;
 
-import java.awt.Point;
-
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class OceanExplorer extends Application{
-	int[][] islandMap;
+	//Instantiate variables
 	Pane root = new AnchorPane();
 	final int dimensions = 25;
 	final int islandCount = 25;
@@ -31,6 +25,8 @@ public class OceanExplorer extends Application{
 	
 	OceanMap oceanMap = new OceanMap();
 	Scene scene;
+	
+	//Creates new ships with random starting locations
 	Ship ship = new Ship();
 	PirateShip pirateShip1 = new PirateShip();
 	PirateShip pirateShip2 = new PirateShip();
@@ -38,11 +34,10 @@ public class OceanExplorer extends Application{
 
 	@Override
 	public void start(Stage oceanStage) throws Exception {
-				
+		//Sets stage and draws images
 		oceanMap.drawMap(root.getChildren(), scalingFactor);
-		
 		scene = new Scene(root, 625, 625);
-		oceanStage.setTitle("The Ocean Blue!");
+		oceanStage.setTitle("Columbus vs. Pirates");
 		oceanStage.setScene(scene);
 		oceanStage.show();
 		loadShipImage();
@@ -50,18 +45,22 @@ public class OceanExplorer extends Application{
 		startSailing();
 	}
 	
-	public void loadShipImage() {
-		//System.out.println(ship.getShipLocation());//Test ship point
+	public void loadShipImage() {	
 		
+		//Place Columbus ship
 		shipImage = new Image("images/ColumbusShip.png",25,25,true,true);
 		shipImageView = new ImageView(shipImage);
 		
 		if(oceanMap.oceanGrid[ship.getShipLocation().x][ship.getShipLocation().y] == 0) {
+			//Places new ship on water...hopefully
 			shipImageView.setX(ship.getShipLocation().x * scalingFactor); 
 			shipImageView.setY(ship.getShipLocation().y * scalingFactor);
 		}
 		else {
-			System.out.println("SHIPWRECKED");
+			//'else' occurs when ship happens to be placed on as island.
+			//If this occurs, a new ship will be created instead.
+			
+			//System.out.println("SHIPWRECKED"); //Test print
 			ship = new Ship();
 			shipImageView.setX(ship.getShipLocation().x * scalingFactor); 
 			shipImageView.setY(ship.getShipLocation().y * scalingFactor);
@@ -70,15 +69,19 @@ public class OceanExplorer extends Application{
 	}
 	
 	public void loadPirateShipImages() {
+		
+		//Places 2 pirate ships on map
 		pirateShipImage = new Image("images/pirateship.gif",25,25,true,true);
 		pirateShipImageView = new ImageView(pirateShipImage);
 		pirateShipImageView2 = new ImageView(pirateShipImage);
 		
 		if(oceanMap.oceanGrid[pirateShip1.getPirateShipLocation().x][pirateShip1.getPirateShipLocation().y] == 0) {
+			//New pirate ship
 			pirateShipImageView.setX(pirateShip1.getPirateShipLocation().x * scalingFactor); 
 			pirateShipImageView.setY(pirateShip1.getPirateShipLocation().y * scalingFactor);
 		}
 		else {
+			//See above comment regarding these else statements
 			System.out.println("SHIPWRECKED");
 			pirateShip1 = new PirateShip();
 			pirateShipImageView.setX(pirateShip1.getPirateShipLocation().x * scalingFactor); 
@@ -96,6 +99,9 @@ public class OceanExplorer extends Application{
 			pirateShipImageView2.setY(pirateShip2.getPirateShipLocation().y * scalingFactor);
 		}
 		
+		//Now that two pirate ships are created, they are added to root.getChildren()
+		//and are made observers of the ship.
+		
 		root.getChildren().add(pirateShipImageView);
 		root.getChildren().add(pirateShipImageView2);
 		ship.addObserver(pirateShip1);
@@ -108,33 +114,32 @@ public class OceanExplorer extends Application{
 			@Override
 			public void handle(KeyEvent ke) { 
 				switch(ke.getCode()){
+					//Following 'if' statements are executed if the desired ship movement is both
+					//not out of bounds and between spaces of water
+				
 					case RIGHT: 
-						if(ship.getShipLocation().x + 1 < 25)
-							if(oceanMap.checkForIsland(ship.getShipLocation().x + 1, ship.getShipLocation().y)) {
+						if(ship.getShipLocation().x + 1 < 25 && oceanMap.checkForWater(ship.getShipLocation().x + 1, ship.getShipLocation().y)) {
 								ship.goEast();
 								chase();
 								checkCaptured();
 							}
 							break; 
 					case LEFT:
-						if(ship.getShipLocation().x - 1 >= 0)
-							if(oceanMap.checkForIsland(ship.getShipLocation().x - 1, ship.getShipLocation().y)) {
+						if(ship.getShipLocation().x - 1 >= 0 && oceanMap.checkForWater(ship.getShipLocation().x - 1, ship.getShipLocation().y)) {
 								ship.goWest();
 								chase();
 								checkCaptured();
 							}
 							break; 
 					case UP:
-						if(ship.getShipLocation().y - 1 >= 0)
-							if(oceanMap.checkForIsland(ship.getShipLocation().x, ship.getShipLocation().y - 1)) {
+						if(ship.getShipLocation().y - 1 >= 0 && oceanMap.checkForWater(ship.getShipLocation().x, ship.getShipLocation().y - 1)) {
 								ship.goNorth();
 								chase();
 								checkCaptured();
 							}
 							break; 
 					case DOWN:
-						if(ship.getShipLocation().y + 1 < 25)
-							if(oceanMap.checkForIsland(ship.getShipLocation().x, ship.getShipLocation().y + 1)) {
+						if(ship.getShipLocation().y + 1 < 25 && oceanMap.checkForWater(ship.getShipLocation().x, ship.getShipLocation().y + 1)) {
 								ship.goSouth();
 								chase();
 								checkCaptured();
@@ -143,6 +148,8 @@ public class OceanExplorer extends Application{
 					default:
 						break;
 				} 
+				
+				//Adjust ship image based on movement
 				shipImageView.setX(ship.getShipLocation().x*scalingFactor); 
 				shipImageView.setY(ship.getShipLocation().y*scalingFactor);
 			}
@@ -150,6 +157,7 @@ public class OceanExplorer extends Application{
 	}
 	
 	public void chase() {
+		//Update pirate images to follow ship
 		pirateShipImageView.setY(pirateShip1.getPirateShipLocation().y * scalingFactor);
 		pirateShipImageView.setX(pirateShip1.getPirateShipLocation().x * scalingFactor);
 		pirateShipImageView2.setY(pirateShip2.getPirateShipLocation().y * scalingFactor);
@@ -157,15 +165,11 @@ public class OceanExplorer extends Application{
 	}
 	
 	public void checkCaptured() {
-		if(ship.getShipLocation().getX() == pirateShip1.getPirateShipLocation().getX() && ship.getShipLocation().getY() == pirateShip1.getPirateShipLocation().getY()){
+		//Prints statement if either pirate catches ship
+		if(ship.getShipLocation().getX() == pirateShip1.getPirateShipLocation().getX() && ship.getShipLocation().getY() == pirateShip1.getPirateShipLocation().getY()
+				|| ship.getShipLocation().getX() == pirateShip2.getPirateShipLocation().getX() && ship.getShipLocation().getY() == pirateShip2.getPirateShipLocation().getY()){
 			System.out.println("Pirate ship has captured Columbus!");
-			System.exit(0);
 			}
-		if(ship.getShipLocation().getX() == pirateShip2.getPirateShipLocation().getX() && ship.getShipLocation().getY() == pirateShip2.getPirateShipLocation().getY()){
-			System.out.println("Pirate ship has captured Columbus!");
-			System.exit(0);
-		}
-		
 	}
 	
 	public static void main(String[] args) {

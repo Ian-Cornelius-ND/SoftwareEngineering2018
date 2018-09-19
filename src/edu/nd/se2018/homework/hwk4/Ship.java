@@ -10,6 +10,7 @@ public class Ship extends Observable{
 	List<Observer> observers = new LinkedList<Observer>();
 	Point shipLocation = new Point();
 	
+	//New ship with a random location
 	public Ship() {
 		shipLocation.x = (int)((25)*Math.random()); 
 		shipLocation.y = (int)((25)*Math.random()); 
@@ -19,6 +20,7 @@ public class Ship extends Observable{
 		return shipLocation;
 	}
 	
+	//Moves ship corresponding with key presses from OceanExplorer
 	public void goNorth() {
 		if(this.shipLocation.y - 1 >= 0) {
 			this.shipLocation.y -= 1; 
