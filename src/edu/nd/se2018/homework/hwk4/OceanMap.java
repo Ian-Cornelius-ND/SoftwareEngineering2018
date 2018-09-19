@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class OceanMap {
-	int[][] oceanGrid = new int[25][25]; 
+	static int[][] oceanGrid = new int[25][25]; 
 	final int dimensions = 25;
 	
 	public void drawMap(ObservableList<Node> root, int scalingFactor) {
@@ -34,7 +34,7 @@ public class OceanMap {
 		}//end island placement
 	}//end drawMap
 	
-	public boolean checkForIsland(int x, int y) {
+	public static boolean checkForIsland(int x, int y) {
 		if(oceanGrid[x][y] == 1)
 			return false;
 		return true;
