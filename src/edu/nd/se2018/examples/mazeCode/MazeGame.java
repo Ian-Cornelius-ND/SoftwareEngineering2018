@@ -107,13 +107,13 @@ public class MazeGame extends Application{
     
     private void loadImages(){
     	
-    	seekImage = new Image("images\\target.png",cellSize, cellSize, false, true);
+    	seekImage = new Image("images/target.png",cellSize, cellSize, false, true);
 		seekImageView = new ImageView(seekImage);
 		seekImageView.setX(maze.getTargetPoint().x*cellSize);
 		seekImageView.setY(maze.getTargetPoint().y*cellSize);
 			
 		// Load "found" target image
-		foundImage = new Image("images\\win.gif",cellSize, cellSize, false, true);
+		foundImage = new Image("images/win.gif",cellSize, cellSize, false, true);
 		foundImageView = new ImageView(foundImage);
 		foundImageView.setX(maze.getTargetPoint().x*cellSize);
 		foundImageView.setY(maze.getTargetPoint().y*cellSize);

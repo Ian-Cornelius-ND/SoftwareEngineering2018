@@ -1,4 +1,4 @@
-package edu.nd.sarec.railwaycrossing.model.vehicles;
+package edu.nd.se2018.homework.hwk5.model.vehicles;
 
 import java.util.Observable;
 
@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * Represents the train entity object
- * @author jane
+ * @author Ian Cornelius
  *
  */
 public class Train extends Observable implements IVehicle{
@@ -44,8 +44,22 @@ public class Train extends Observable implements IVehicle{
 		notifyObservers();
 	}
 	
+	public void moveWE(){
+		currentX+=2;
+		imgView.setX(currentX);
+		setChanged();
+		notifyObservers();
+	}
+	
 	public boolean offScreen(){
 		if (currentX < -200)
+			return true;
+		else
+			return false;				
+	}
+	
+	public boolean offScreenWE(){
+		if (currentX > 1500)
 			return true;
 		else
 			return false;				
@@ -54,7 +68,7 @@ public class Train extends Observable implements IVehicle{
 	public void reset(){
 		currentX = originalX;
 	}
-
+	
 	//@Override
 	public Node getImageView() {
 		return imgView;

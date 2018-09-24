@@ -1,4 +1,4 @@
-package edu.nd.sarec.railwaycrossing.view;
+package edu.nd.se2018.homework.hwk5.view;
 
 import javafx.scene.image.Image;
 

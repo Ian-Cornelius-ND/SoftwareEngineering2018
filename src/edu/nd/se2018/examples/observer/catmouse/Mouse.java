@@ -16,10 +16,7 @@ import javafx.scene.image.ImageView;
  *
  */
 public class Mouse extends Observable {
-<<<<<<< HEAD
 	List<Observer> observers = new LinkedList<Observer>();
-=======
->>>>>>> 4098c516dc8eb797ab7bfe164a16214020d41ab7
 	Point mousePosition = new Point(400,500);  	// Actual position of the mouse
 	Point targetPosition;  						// Coordinates that the mouse is currently heading towards
 	Random rand;								// Introduces randomness into the "game"
