@@ -63,7 +63,7 @@ public class Car extends Observable implements IVehicle, Observer{
 		boolean canMove = true; 
 		boolean carCrossing = false;
 		//Check if right cars could change lanes (i.e. at road coordinates) and give chance to cross
-		if(getVehicleY() < 394 && getVehicleY() > 390 && getVehicleX() == 791 && Math.random() > .995 && carCrossing == false) {
+		if(getVehicleY() < 644 && getVehicleY() > 640 && getVehicleX() == 791 && Math.random() > .9 && carCrossing == false) {
 			changeLanes = true;
 			carCrossing = true;
 			ivCar.setRotate(ivCar.getRotate()+90);
@@ -85,6 +85,10 @@ public class Car extends Observable implements IVehicle, Observer{
 				this.leadCarY = -1;
 				changeLanes = false;
 				ivCar.setRotate(ivCar.getRotate()-90);
+				/////
+				this.deleteObservers();
+				//this.addObserver(this);
+				/////
 			}
 			setChanged();
 			notifyObservers();
@@ -104,9 +108,11 @@ public class Car extends Observable implements IVehicle, Observer{
 			if (canMove && carCrossing == false){
 				currentY+=speed;
 				ivCar.setY(currentY);
-				setChanged();
-				notifyObservers();
+//				setChanged();
+//				notifyObservers();
 			}
+			setChanged();
+			notifyObservers();
 		}
 	}
 	

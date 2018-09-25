@@ -38,7 +38,7 @@ public class CarFactory {
 		if (previousCar == null || location.y < previousCar.getVehicleY()-100){
 			Car car = new Car(location.x,location.y, gates, changedGate);	
 			double speedVariable = (Math.random() * 10)/10;
-			car.setSpeed((2-speedVariable)); 
+			car.setSpeed((2-speedVariable)*1.5); 
 			
 			//Add car/gate observers
 			for(CrossingGate gate: gates){

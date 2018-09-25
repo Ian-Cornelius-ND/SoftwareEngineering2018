@@ -32,7 +32,7 @@ public class MapBuilder {
 		//Created new crossing road
 		roads.put("Right",new Road(new Point(800,0),new Point (800,1000),Direction.SOUTH,true,false));
 		roads.put("Left",new Road(new Point(400,0),new Point (400,1000),Direction.SOUTH,true,false));		
-		roads.put("Cross",new Road(new Point(415,400),new Point (785,400),Direction.EAST,true,true));	
+		roads.put("Cross",new Road(new Point(415,650),new Point (785,650),Direction.EAST,true,true));	
 	}
 	
 	private void buildCrossingGates(){
