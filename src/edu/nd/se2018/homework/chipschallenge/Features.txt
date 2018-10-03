@@ -1,0 +1,20 @@
+Chips' Challenge Deliverable 1
+Ian Cornelius
+~
+The first level of my version of Chip's Challenge will have Chip navigate a randomly generated level with 5 chips and 2 portals. Entering the portals before all chips are collected with regenerate the level. Once all chips are collected, one portal becomes the true "exit" while the others remain to restart the level. Adds a bit of challenge and luck into the game.
+
+Working features:
+	- Movement
+	- Chip collection and count
+	- Random level generation
+	- Level refreshing
+
+Features-in-progress:
+	- Collected chips become walls. May keep this feature for a little added 	
+	  difficulty and thought
+	
+Desired features:
+	- Level 2: Enemies with observable pattern
+		   Keys to unlock doors
+	- Manual refresh of Level 1 in case keys/chips/Chip become stuck (very small 
+	  chance, but still possible)
