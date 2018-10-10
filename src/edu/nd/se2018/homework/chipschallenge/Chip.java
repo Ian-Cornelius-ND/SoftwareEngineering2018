@@ -11,6 +11,7 @@ public class Chip extends Observable
 	List<Observer> observers = new LinkedList<Observer>();
 	Point chipLocation = new Point();
 	int collectedChips = 0;
+	int collectedKeys = 0;
 	
 	public Chip()
 	{

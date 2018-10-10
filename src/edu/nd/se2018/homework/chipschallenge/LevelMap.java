@@ -9,131 +9,97 @@ import javafx.scene.image.ImageView;
 
 public class LevelMap 
 {
-	static int[][] levelLayout = new int[25][25]; 
+	static int[][] levelLayout;
 	Random r = new Random();
 	
-	public void drawLevel1Map(ObservableList<Node> root) 
-	{
-		for(int i = 0; i < 25; i++) //Set background
-		{
-			for(int j = 0; j < 25; j++) 
-			{
-				Image blankImage = new Image("images/blankTile.png",25,25,true,true);
-				ImageView blankImageView = new ImageView(blankImage);
-				blankImageView.setX(i * 25);
-				blankImageView.setY(j * 25);
-				root.add(blankImageView);
-				levelLayout[i][j] = 0;
-			}
-		}
-		for(int i = 0; i < 2; i++) //Outer West and East walls
-		{
-			for(int j = 0; j < 15; j++)
-			{
-				int wallX = (i * 15 + 5);
-				int wallY = (j + 5);
-				Image wallImage = new Image("images/wallTile.png",25,25,true,true); 
-				ImageView wallImageView = new ImageView(wallImage);
-				wallImageView.setX(wallX * 25);
-				wallImageView.setY(wallY * 25);
-				root.add(wallImageView);
-				levelLayout[wallX][wallY] = 1;
-			}
-		}
-		
-		for(int i = 0; i < 2; i++) //Outer North and South walls
-		{
-			for(int j = 0; j < 16; j++)
-			{
-				int wallY = (i * 15 + 5);
-				int wallX = (j + 5);
-				Image wallImage = new Image("images/wallTile.png",25,25,true,true); 
-				ImageView wallImageView = new ImageView(wallImage);
-				wallImageView.setX(wallX * 25);
-				wallImageView.setY(wallY * 25);
-				root.add(wallImageView);
-				levelLayout[wallX][wallY] = 1;
-			}
-		}
-
-		for(int k = 0; k < 50; k++) { //Make random walls in play area
-			int wallX = (int)(r.nextInt(15) + 5);
-			int wallY = (int)(r.nextInt(15) + 5);
-			
-			if(levelLayout[wallX][wallY] == 0) {
-				Image targetImage = new Image("images/wallTile.png",25,25,true,true);
-				ImageView targetImageView = new ImageView(targetImage);
-				targetImageView.setX(wallX * 25);
-				targetImageView.setY(wallY * 25);
-				root.add(targetImageView);
-
-				levelLayout[wallX][wallY] = 1; //Toggle '1' for wall
-			}
-			else
-				k--;
-		}
-		
-		for(int n = 0; n < 5; n++) {
-			int chipX = (int)(r.nextInt(15) + 5);
-			int chipY = (int)(r.nextInt(15) + 5);
-			
-			if(levelLayout[chipX][chipY] == 0) {
-				Image targetImage = new Image("images/chipItem.png",25,25,true,true);
-				ImageView targetImageView = new ImageView(targetImage);
-				targetImageView.setX(chipX * 25);
-				targetImageView.setY(chipY * 25);
-				root.add(targetImageView);
-
-				levelLayout[chipX][chipY] = 2; //Toggle '2' for chip
-			}
-			else
-				n--;
-		}
-		
-		for(int m = 0; m < 1; m++) {
-			int refreshX = (int)(r.nextInt(15) + 5);
-			int refreshY = (int)(r.nextInt(15) + 5);
-			
-			if(levelLayout[refreshX][refreshY] == 0) {
-				Image targetImage = new Image("images/portal.png",25,25,true,true);
-				ImageView targetImageView = new ImageView(targetImage);
-				targetImageView.setX(refreshX * 25);
-				targetImageView.setY(refreshY * 25);
-				root.add(targetImageView);
-		
-				levelLayout[refreshX][refreshY] = 3; //Toggle '3' for refresh level
-			}
-			else
-				m--;
-		}
-		
-		for(int m = 0; m < 1; m++) {
-			int finishX = (int)(r.nextInt(15) + 5);
-			int finishY = (int)(r.nextInt(15) + 5);
-			
-			if(levelLayout[finishX][finishY] == 0) {
-				Image targetImage = new Image("images/portal.png",25,25,true,true);
-				ImageView targetImageView = new ImageView(targetImage);
-				targetImageView.setX(finishX * 25);
-				targetImageView.setY(finishY * 25);
-				root.add(targetImageView);
-		
-				levelLayout[finishX][finishY] = 4; //Toggle '4' for exit level
-				System.out.println("exit: " + finishX + ", " + finishY);
-			}
-			else
-				m--;
-		}
-		
+	public void drawLevel1Map(ObservableList<Node> root) {
+		levelLayout = new int[25][25];
+		level1Map one = new level1Map();
+		one.draw(root, levelLayout);
 	}
 	
-	public void collectChip(ObservableList<Node> root, int x, int y) {
-		Image targetImage = new Image("images/wallTile.png",25,25,true,true);
+	public void drawLevel2Map(ObservableList<Node> root) {
+		levelLayout = new int[25][25];
+		level2Map two = new level2Map();
+		two.draw(root, levelLayout);
+	}
+	
+	
+	public void collectChip(ObservableList<Node> root, int x, int y, int c) {
+		Image targetImage = new Image("images/blankTile.png",25,25,true,true);
 		ImageView targetImageView = new ImageView(targetImage);
 		targetImageView.setX(x * 25);
 		targetImageView.setY(y * 25);
 		root.add(targetImageView);
-		levelLayout[x][y] = 1;
+		levelLayout[x][y] = 0;
+		
+		Image chipImage = new Image("images/chipItem.png",25,25,true,true);
+		ImageView chipImageView = new ImageView(chipImage);
+		chipImageView.setX(c * 25);
+		chipImageView.setY(0 * 25);
+		root.add(chipImageView);
+		levelLayout[c][0] = 1;
+	}
+	
+	public void collectKey(ObservableList<Node> root, int x, int y, int k) {
+		Image targetImage = new Image("images/blankTile.png",25,25,true,true);
+		ImageView targetImageView = new ImageView(targetImage);
+		targetImageView.setX(x * 25);
+		targetImageView.setY(y * 25);
+		root.add(targetImageView);
+		levelLayout[x][y] = 0;
+		
+		switch(k) {
+		case 0:
+			Image keyImage = new Image("images/blueKey.png",25,25,true,true);
+			ImageView keyImageView = new ImageView(keyImage);
+			keyImageView.setX(k * 25);
+			keyImageView.setY(1 * 25);
+			root.add(keyImageView);
+			
+			//System.out.println("TESTING DOOR");
+			
+			targetImage = new Image("images/blankTile.png",25,25,true,true);
+			targetImageView = new ImageView(targetImage);
+			targetImageView.setX(12 * 25);
+			targetImageView.setY(8 * 25);
+			root.add(targetImageView);
+			levelLayout[12][8] = 0;
+			break;
+		case 1:
+			keyImage = new Image("images/greenKey.png",25,25,true,true);
+			keyImageView = new ImageView(keyImage);
+			keyImageView.setX(k * 25);
+			keyImageView.setY(1 * 25);
+			root.add(keyImageView);
+			
+			//System.out.println("TESTING DOOR");
+			
+			targetImage = new Image("images/blankTile.png",25,25,true,true);
+			targetImageView = new ImageView(targetImage);
+			targetImageView.setX(12 * 25);
+			targetImageView.setY(10 * 25);
+			root.add(targetImageView);
+			levelLayout[12][10] = 0;
+			break;
+		case 2:
+			keyImage = new Image("images/redKey.png",25,25,true,true);
+			keyImageView = new ImageView(keyImage);
+			keyImageView.setX(k * 25);
+			keyImageView.setY(1 * 25);
+			root.add(keyImageView);
+			
+			//System.out.println("TESTING DOOR");
+			
+			targetImage = new Image("images/blankTile.png",25,25,true,true);
+			targetImageView = new ImageView(targetImage);
+			targetImageView.setX(18 * 25);
+			targetImageView.setY(6 * 25);
+			root.add(targetImageView);
+			levelLayout[18][6] = 0;
+			break;
+		}
+
 	}
 	
 	public static boolean checkForWall(int x, int y) 
@@ -166,6 +132,24 @@ public class LevelMap
 	public static boolean checkForExit(int x, int y) 
 	{
 		if(levelLayout[x][y] == 4)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean checkForKey(int x, int y) 
+	{
+		if(levelLayout[x][y] == 5)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean checkForGameOver(int x, int y) 
+	{
+		if(levelLayout[x][y] == 9)
 		{
 			return true;
 		}
